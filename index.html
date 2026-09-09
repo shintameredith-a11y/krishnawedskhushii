@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>💕 For My Love 💕</title>
+    <style>
+        /* ── Reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 40%, #e8eaf6 100%);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── Background floating hearts ── */
+        .bg-hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bg-heart {
+            position: absolute;
+            font-size: 1.8rem;
+            opacity: 0.15;
+            animation: floatHeart 20s infinite linear;
+            user-select: none;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.8);
+                opacity: 0.1;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(720deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ── Main card ── */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 48px;
+            padding: 48px 40px 40px;
+            max-width: 620px;
+            width: 100%;
+            box-shadow:
+                0 30px 80px rgba(233, 30, 99, 0.15),
+                0 10px 30px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* ── Question ── */
+        .question-area {
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #e91e63;
+            background: rgba(233, 30, 99, 0.10);
+            padding: 4px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .question-emoji {
+            font-size: 2.2rem;
+            display: block;
+            margin-top: 6px;
+        }
+
+        /* ── Buttons ── */
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+            position: relative;
+            min-height: 70px;
+        }
+
+        .btn {
+            padding: 16px 48px;
+            border: none;
+            border-radius: 60px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            letter-spacing: 0.5px;
+            position: relative;
+            min-width: 140px;
+            user-select: none;
+        }
+
+        .btn:active {
+            transform: scale(0.94);
+        }
+
+        /* ── Yes button ── */
+        .btn-yes {
+            background: linear-gradient(135deg, #e91e63, #f06292);
+            color: #fff;
+            box-shadow: 0 8px 28px rgba(233, 30, 99, 0.35);
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(233, 30, 99, 0.45);
+        }
+
+        .btn-yes:active {
+            transform: scale(0.94) !important;
+        }
+
+        .btn-yes .heart-burst {
+            display: none;
+        }
+
+        /* ── No button ── */
+        .btn-no {
+            background: linear-gradient(135deg, #ef5350, #e53935);
+            color: #fff;
+            box-shadow: 0 8px 28px rgba(229, 57, 53, 0.30);
+            position: relative;
+            z-index: 10;
+            transition: left 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                top 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+            will-change: left, top;
+        }
+
+        .btn-no:hover {
+            transform: scale(1.04);
+            box-shadow: 0 12px 40px rgba(229, 57, 53, 0.45);
+        }
+
+        .btn-no:active {
+            transform: scale(0.92) !important;
+        }
+
+        /* ── Shout particles ── */
+        .shout-particle {
+            position: fixed;
+            pointer-events: none;
+            font-weight: 800;
+            font-size: 2.4rem;
+            z-index: 9999;
+            animation: shoutFly 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            user-select: none;
+        }
+
+        @keyframes shoutFly {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.5) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(1.6) rotate(var(--rot));
+            }
+        }
+
+        /* ── Yes celebration ── */
+        .celebration-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2.8rem;
+            z-index: 9999;
+            animation: heartCelebration 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            user-select: none;
+        }
+
+        @keyframes heartCelebration {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--cx), var(--cy)) scale(1.8) rotate(var(--crot));
+            }
+        }
+
+        /* ── Final screen ── */
+        .final-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0;
+        }
+
+        .final-screen.active {
+            display: flex;
+        }
+
+        .final-screen .big-emoji {
+            font-size: 4.5rem;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        .final-screen h2 {
+            font-size: 2.2rem;
+            color: #1a1a2e;
+            font-weight: 800;
+        }
+
+        .final-screen p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 320px;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* ── Progress dots ── */
+        .progress {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: background 0.4s ease, transform 0.3s ease;
+        }
+
+        .dot.active {
+            background: #e91e63;
+            transform: scale(1.3);
+        }
+
+        .dot.done {
+            background: #f06292;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .card {
+                padding: 32px 20px 28px;
+                border-radius: 32px;
+            }
+
+            .question-text {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 14px 28px;
+                font-size: 1.05rem;
+                min-width: 110px;
+            }
+
+            .buttons {
+                gap: 14px;
+                min-height: 60px;
+            }
+
+            .btn-no {
+                font-size: 1rem;
+                padding: 14px 22px;
+                min-width: 90px;
+            }
+
+            .shout-particle {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 24px 14px 20px;
+            }
+
+            .question-text {
+                font-size: 1.25rem;
+            }
+
+            .btn {
+                padding: 12px 18px;
+                font-size: 0.95rem;
+                min-width: 80px;
+            }
+
+            .buttons {
+                gap: 10px;
+            }
+        }
+
+        /* ── Shake animation for No button when clicked ── */
+        .btn-no.shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+            20% {
+                transform: rotate(-8deg) scale(1.05);
+            }
+            40% {
+                transform: rotate(8deg) scale(1.05);
+            }
+            60% {
+                transform: rotate(-6deg);
+            }
+            80% {
+                transform: rotate(6deg);
+            }
+        }
+
+        /* ── Floating "NO!" text that follows the button ── */
+        .no-trail {
+            position: fixed;
+            pointer-events: none;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: #e53935;
+            z-index: 9998;
+            animation: trailFade 0.9s ease-out forwards;
+            user-select: none;
+            text-shadow: 0 2px 12px rgba(229, 57, 53, 0.3);
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(0.6);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx2), var(--ty2)) scale(1.8);
+            }
+        }
+
+        /* ── Glow behind the card ── */
+        .card-glow {
+            position: absolute;
+            inset: -40px;
+            border-radius: 80px;
+            background: radial-gradient(circle at 30% 20%, rgba(233, 30, 99, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── Background floating hearts ─── -->
+    <div class="bg-hearts" id="bgHearts"></div>
+
+    <!-- ─── Main card ─── -->
+    <div class="card" id="mainCard">
+        <div class="card-glow"></div>
+
+        <!-- Question area -->
+        <div class="question-area" id="questionArea">
+            <div class="question-number" id="qNumber">Question 1 / 6</div>
+            <div class="question-text" id="qText">
+                Do you love me?
+                <span class="question-emoji">💕</span>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="buttons" id="buttonsContainer">
+            <button class="btn btn-yes" id="btnYes">Yes 💖</button>
+            <button class="btn btn-no" id="btnNo">No 🙈</button>
+        </div>
+
+        <!-- Progress dots -->
+        <div class="progress" id="progressDots"></div>
+
+        <!-- Final screen (hidden initially) -->
+        <div class="final-screen" id="finalScreen">
+            <div class="big-emoji">🥰</div>
+            <h2>You're the best!</h2>
+            <p>I love you more than words can say. 💖</p>
+            <div style="font-size:2.8rem; margin-top:6px; letter-spacing:6px;">💖💕💗💝💘</div>
+        </div>
+    </div>
+
+    <script>
+        // ─────────────────────────────────────────────
+        //  QUESTIONS
+        // ─────────────────────────────────────────────
+        const questions = [{
+            text: 'Do you love me?',
+            emoji: '💕'
+        }, {
+            text: 'Am I the cutest person ever?',
+            emoji: '🥰'
+        }, {
+            text: 'Will you be my forever Valentine?',
+            emoji: '💝'
+        }, {
+            text: 'Do you want a big hug right now?',
+            emoji: '🤗'
+        }, {
+            text: 'Am I your favorite person?',
+            emoji: '💖'
+        }, {
+            text: 'Will you marry me? (just kidding… or not? 😉)',
+            emoji: '💍'
+        }];
+
+        // ─────────────────────────────────────────────
+        //  STATE
+        // ─────────────────────────────────────────────
+        let currentQuestion = 0;
+        let isFinal = false;
+        let noClickCount = 0;
+
+        // ─────────────────────────────────────────────
+        //  DOM REFS
+        // ─────────────────────────────────────────────
+        const qNumber = document.getElementById('qNumber');
+        const qText = document.getElementById('qText');
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const progressDots = document.getElementById('progressDots');
+        const finalScreen = document.getElementById('finalScreen');
+        const questionArea = document.getElementById('questionArea');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+
+        // ─────────────────────────────────────────────
+        //  INIT
+        // ─────────────────────────────────────────────
+        function init() {
+            renderDots();
+            updateQuestion();
+            spawnBgHearts();
+            bindEvents();
+        }
+
+        // ─────────────────────────────────────────────
+        //  RENDER DOTS
+        // ─────────────────────────────────────────────
+        function renderDots() {
+            progressDots.innerHTML = '';
+            questions.forEach((_, i) => {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                progressDots.appendChild(dot);
+            });
+        }
+
+        function updateDots() {
+            const dots = progressDots.querySelectorAll('.dot');
+            dots.forEach((dot, i) => {
+                dot.classList.remove('active', 'done');
+                if (i < currentQuestion) dot.classList.add('done');
+                if (i === currentQuestion) dot.classList.add('active');
+            });
+        }
+
+        // ─────────────────────────────────────────────
+        //  UPDATE QUESTION
+        // ─────────────────────────────────────────────
+        function updateQuestion() {
+            if (isFinal) return;
+
+            if (currentQuestion >= questions.length) {
+                showFinal();
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            qNumber.textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
+            qText.innerHTML = `${q.text} <span class="question-emoji">${q.emoji}</span>`;
+            updateDots();
+
+            // Reset button positions (in case No ran away)
+            btnNo.style.position = 'relative';
+            btnNo.style.left = '0';
+            btnNo.style.top = '0';
+            btnNo.style.transform = 'none';
+        }
+
+        // ─────────────────────────────────────────────
+        //  FINAL SCREEN
+        // ─────────────────────────────────────────────
+        function showFinal() {
+            isFinal = true;
+            questionArea.style.display = 'none';
+            buttonsContainer.style.display = 'none';
+            progressDots.style.display = 'none';
+            finalScreen.classList.add('active');
+
+            // Massive heart celebration
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => spawnCelebrationHeart(), i * 120);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        //  YES CLICK
+        // ─────────────────────────────────────────────
+        function onYesClick() {
+            if (isFinal) return;
+
+            // Celebration hearts
+            for (let i = 0; i < 14; i++) {
+                setTimeout(() => spawnCelebrationHeart(), i * 60);
+            }
+
+            // Move to next question
+            currentQuestion++;
+
+            if (currentQuestion >= questions.length) {
+                showFinal();
+            } else {
+                setTimeout(() => updateQuestion(), 300);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        //  NO — RUN & SHOUT!
+        // ─────────────────────────────────────────────
+        function onNoInteraction(e) {
+            if (isFinal) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            noClickCount++;
+
+            // 1. Shout particles
+            spawnShoutParticles(e);
+
+            // 2. Trail text
+            spawnNoTrail(e);
+
+            // 3. Move the button to a random spot
+            moveNoButton(e);
+
+            // 4. Shake it
+            btnNo.classList.remove('shake');
+            void btnNo.offsetWidth;
+            btnNo.classList.add('shake');
+
+            // 5. Change text briefly
+            const originalText = btnNo.textContent;
+            const shouts = ['NOOO! 😱', 'NEVER! 🙅', 'STOP! 🛑', 'AHHH! 😈', 'NOPE! ✋', 'NO WAY! 🚫'];
+            btnNo.textContent = shouts[Math.floor(Math.random() * shouts.length)];
+            setTimeout(() => {
+                btnNo.textContent = originalText;
+            }, 500);
+        }
+
+        // ─────────────────────────────────────────────
+        //  MOVE NO BUTTON
+        // ─────────────────────────────────────────────
+        function moveNoButton(e) {
+            const card = document.getElementById('mainCard');
+            const cardRect = card.getBoundingClientRect();
+            const btnRect = btnNo.getBoundingClientRect();
+
+            // Get viewport dimensions
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+
+            // Button dimensions
+            const bw = btnRect.width;
+            const bh = btnRect.height;
+
+            // Padding from edges
+            const pad = 20;
+
+            // Compute safe bounds within the viewport
+            const minX = pad;
+            const maxX = vw - bw - pad;
+            const minY = pad;
+            const maxY = vh - bh - pad;
+
+            // Generate random position
+            let x = Math.random() * (maxX - minX) + minX;
+            let y = Math.random() * (maxY - minY) + minY;
+
+            // Make sure it's not too close to the mouse (if we have mouse coords)
+            if (e && e.clientX) {
+                const dx = e.clientX - (x + bw / 2);
+                const dy = e.clientY - (y + bh / 2);
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180) {
+                    // Push it away
+                    const angle = Math.atan2(dy, dx);
+                    const push = 200;
+                    x = Math.max(minX, Math.min(maxX, x + Math.cos(angle) * push));
+                    y = Math.max(minY, Math.min(maxY, y + Math.sin(angle) * push));
+                }
+            }
+
+            // Apply position
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = x + 'px';
+            btnNo.style.top = y + 'px';
+            btnNo.style.transform = `scale(${0.85 + Math.random() * 0.3}) rotate(${Math.random() * 12 - 6}deg)`;
+            btnNo.style.zIndex = '999';
+        }
+
+        // ─────────────────────────────────────────────
+        //  SHOUT PARTICLES
+        // ─────────────────────────────────────────────
+        function spawnShoutParticles(e) {
+            const emojis = ['😱', 'NO!', '🚫', '💢', '😈', '🙅', '✋', 'AHH!', 'STOP!', 'NOPE!'];
+            const count = 6 + Math.floor(Math.random() * 6);
+
+            // Use mouse position or button position
+            const x = e.clientX || window.innerWidth / 2;
+            const y = e.clientY || window.innerHeight / 2;
+
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'shout-particle';
+                el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+                const angle = Math.random() * 2 * Math.PI;
+                const dist = 120 + Math.random() * 220;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist - 60;
+                const rot = (Math.random() - 0.5) * 360;
+
+                el.style.left = x + 'px';
+                el.style.top = y + 'px';
+                el.style.setProperty('--tx', tx + 'px');
+                el.style.setProperty('--ty', ty + 'px');
+                el.style.setProperty('--rot', rot + 'deg');
+
+                // Random size
+                const size = 1.2 + Math.random() * 1.6;
+                el.style.fontSize = (2.0 * size) + 'rem';
+
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1300);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        //  NO TRAIL TEXT
+        // ─────────────────────────────────────────────
+        function spawnNoTrail(e) {
+            const x = e.clientX || window.innerWidth / 2;
+            const y = e.clientY || window.innerHeight / 2;
+            const texts = ['NO!', '🙈', 'STOP', '🚫', 'NOPE', '✋', 'AHH'];
+
+            for (let i = 0; i < 3; i++) {
+                const el = document.createElement('div');
+                el.className = 'no-trail';
+                el.textContent = texts[Math.floor(Math.random() * texts.length)];
+
+                const angle = Math.random() * 2 * Math.PI;
+                const dist = 40 + Math.random() * 100;
+                const tx2 = Math.cos(angle) * dist;
+                const ty2 = Math.sin(angle) * dist - 40;
+
+                el.style.left = (x + (Math.random() - 0.5) * 60) + 'px';
+                el.style.top = (y + (Math.random() - 0.5) * 60) + 'px';
+                el.style.setProperty('--tx2', tx2 + 'px');
+                el.style.setProperty('--ty2', ty2 + 'px');
+
+                const size = 0.9 + Math.random() * 1.2;
+                el.style.fontSize = (1.4 * size) + 'rem';
+
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1000);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        //  CELEBRATION HEARTS (for Yes)
+        // ─────────────────────────────────────────────
+        function spawnCelebrationHeart() {
+            const emojis = ['💖', '💕', '💗', '💝', '❤️', '🥰', '✨', '💘', '💓'];
+            const el = document.createElement('div');
+            el.className = 'celebration-heart';
+            el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+            const x = window.innerWidth / 2 + (Math.random() - 0.5) * 400;
+            const y = window.innerHeight / 2 + (Math.random() - 0.5) * 200;
+            const cx = (Math.random() - 0.5) * 500;
+            const cy = -200 - Math.random() * 400;
+            const crot = (Math.random() - 0.5) * 720;
+
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            el.style.setProperty('--cx', cx + 'px');
+            el.style.setProperty('--cy', cy + 'px');
+            el.style.setProperty('--crot', crot + 'deg');
+
+            const size = 1.2 + Math.random() * 2.0;
+            el.style.fontSize = (2.2 * size) + 'rem';
+
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1700);
+        }
+
+        // ─────────────────────────────────────────────
+        //  BACKGROUND HEARTS
+        // ─────────────────────────────────────────────
+        function spawnBgHearts() {
+            const container = document.getElementById('bgHearts');
+            const emojis = ['❤️', '💕', '💗', '💖', '💝', '🥰'];
+            for (let i = 0; i < 18; i++) {
+                const el = document.createElement('div');
+                el.className = 'bg-heart';
+                el.textContent = emojis[i % emojis.length];
+                el.style.left = Math.random() * 100 + '%';
+                el.style.animationDuration = (16 + Math.random() * 20) + 's';
+                el.style.animationDelay = (Math.random() * 20) + 's';
+                el.style.fontSize = (1.2 + Math.random() * 2.0) + 'rem';
+                container.appendChild(el);
+            }
+        }
+
+        // ─────────────────────────────────────────────
+        //  BIND EVENTS
+        // ─────────────────────────────────────────────
+        function bindEvents() {
+            // Yes button
+            btnYes.addEventListener('click', onYesClick);
+
+            // No button — run on hover AND click
+            btnNo.addEventListener('mouseenter', (e) => {
+                if (!isFinal) {
+                    // Also spawn a small trail on hover
+                    spawnNoTrail(e);
+                    moveNoButton(e);
+                }
+            });
+
+            btnNo.addEventListener('click', (e) => {
+                onNoInteraction(e);
+            });
+
+            // Also on touch devices
+            btnNo.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (!isFinal) {
+                    const touch = e.touches[0];
+                    const fakeEvent = { clientX: touch.clientX, clientY: touch.clientY, preventDefault: () => {},
+                        stopPropagation: () => {} };
+                    onNoInteraction(fakeEvent);
+                }
+            }, { passive: false });
+
+            // Window resize: reset No position if it's out of bounds
+            window.addEventListener('resize', () => {
+                if (!isFinal && btnNo.style.position === 'fixed') {
+                    const rect = btnNo.getBoundingClientRect();
+                    const vw = window.innerWidth;
+                    const vh = window.innerHeight;
+                    const pad = 20;
+                    let x = parseFloat(btnNo.style.left) || 0;
+                    let y = parseFloat(btnNo.style.top) || 0;
+                    const bw = rect.width || 100;
+                    const bh = rect.height || 50;
+                    x = Math.max(pad, Math.min(vw - bw - pad, x));
+                    y = Math.max(pad, Math.min(vh - bh - pad, y));
+                    btnNo.style.left = x + 'px';
+                    btnNo.style.top = y + 'px';
+                }
+            });
+        }
+
+        // ─────────────────────────────────────────────
+        //  START
+        // ─────────────────────────────────────────────
+        init();
+
+        console.log('💕 Made with love for the most special person! 💕');
+    </script>
+</body>
+</html>
